@@ -1,10 +1,10 @@
 name: first workflow
 on:
-  workflow_dispatch:
-    inputs:
-      versionName:
-        required: true
-        description: "this is version name for github workflow"
+#  workflow_dispatch:
+#    inputs:
+#      versionName:
+#        required: true
+#        description: "this is version name for github workflow"
   # repository_dispatch:
   #   types: [test]
   push:
@@ -18,7 +18,11 @@ jobs:
   first-workflow-job:
     name: first job
     runs-on: ubuntu-latest
+    container:
+      image: node:14.16
     steps:
+      - name: check node version
+        run: node -v
       - name: before checkout action
         if: github.ref == 'refs/heads/main'
         run: ls
@@ -27,7 +31,7 @@ jobs:
       - name: checkout steps
         uses: actions/checkout@v3
         
-      - name: after checkout action
-        if: github.event.inputs.versionName == 'main'
-        run: ls
-        shell: bash
+#      - name: after checkout action
+#        if: github.event.inputs.versionName == 'main'
+#        run: ls
+#        shell: bash
